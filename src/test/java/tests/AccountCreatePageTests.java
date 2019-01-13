@@ -6,10 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.AccountCreatePageHelper;
-import pages.HomePageHelper;
-import pages.MenuPageHelper;
-import pages.ProfilePageHelper;
+import pages.*;
 
 import java.util.Random;
 
@@ -21,6 +18,7 @@ public class AccountCreatePageTests extends TestBase {
     AccountCreatePageHelper accountCreatePage;
     ProfilePageHelper profilePage;
     MenuPageHelper menuPage;
+    LoginPageHelper loginPage;
 
 
     @BeforeMethod
@@ -34,11 +32,30 @@ public class AccountCreatePageTests extends TestBase {
                 ProfilePageHelper.class);
         menuPage = PageFactory
                 .initElements(driver, MenuPageHelper.class);
+        loginPage = PageFactory
+                .initElements(driver,LoginPageHelper.class);
     }
 
     @Test
     public void createNewAccount(){
-        String email1 = latinDigitString(8) + "@gmail.com";
+        homePage.waitUntilPageLoad()
+                .pressCreateAccountButton();
+        accountCreatePage.waitUntilPageLoad()
+                .enterValueToFieldEmailRandom() //enterValueToFieldEmail(email1)
+                .enterValueToFieldPassword("example")
+                .enterValueToFieldRepPassword("example")
+                .pressRegistrationButton();
+        profilePage.waitUntilPageLoad()
+                .menuButtonClick();
+        menuPage.waitUntilPageLoad()
+                .pressLogOutButton();
+        homePage.waitUntilPageLoad();
+        Assert.assertEquals(homePage.getHeader(), "Shabbat in the family circle");
+    }
+
+    @Test
+    public void createNewAccountAndLogin(){
+        String email1 = accountCreatePage.latinDigitString(8) + "@gmail.com";
         homePage.waitUntilPageLoad()
                 .pressCreateAccountButton();
         accountCreatePage.waitUntilPageLoad()
@@ -52,10 +69,25 @@ public class AccountCreatePageTests extends TestBase {
                 .pressLogOutButton();
         homePage.waitUntilPageLoad();
         Assert.assertEquals(homePage.getHeader(), "Shabbat in the family circle");
+
+        homePage.pressLoginButton();
+        loginPage.enterValueToFieldEmail(email1)
+                .enterValueToFieldPassword("example")
+                .pressLogInButton();
+        profilePage.waitUntilPageLoad();
+        Assert.assertEquals(profilePage.getHeader(),"Registration");
+
+        profilePage.menuButtonClick();
+        menuPage.waitUntilPageLoad();
+        menuPage.pressLogOutButton();
+        homePage.waitUntilPageLoad();
+
+        Assert.assertEquals(homePage.getHeader(),"Shabbat in the family circle");
+
     }
 
 
-    public static String latinDigitString(int length){
+    /*public static String latinDigitString(int length){
         String str = "";
         char ch;
         int number;
@@ -69,5 +101,5 @@ public class AccountCreatePageTests extends TestBase {
             }
         }while(str.length()<length);
         return str;
-    }
+    }*/
 }

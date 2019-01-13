@@ -25,23 +25,28 @@ public class LoginPageHelper extends PageBase {
         super(driver);
     }
 
-    public void waitUntilPageLoad() {
+    public LoginPageHelper waitUntilPageLoad() {
         waitUntilElementIsLoaded(driver,
                 cancelButton,
                 20);
+        return this;
     }
 
-    public void enterValueToFieldEmail(String value) {
+    public LoginPageHelper enterValueToFieldEmail(String value) {
+
         setValueToField(emailField,value);
+        return this;
     }
 
-    public void enterValueToFieldPassword(String value) {
+    public LoginPageHelper enterValueToFieldPassword(String value) {
         setValueToField(passwordField,value);
+        return this;
     }
 
-    public void pressLogInButton() {
+    public LoginPageHelper pressLogInButton() {
         waitUntilElementIsLoaded(driver, loginButton, 20);
         loginButton.click();
+        return this;
     }
 
     public String getAlertText() {

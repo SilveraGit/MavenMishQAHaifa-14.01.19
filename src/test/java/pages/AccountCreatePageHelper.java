@@ -19,6 +19,8 @@ public class AccountCreatePageHelper extends PageBase {
     @FindBy(xpath = "//span[contains(text(),'Registration')]")
     WebElement registrationButton;
 
+    //public String email;
+
     public AccountCreatePageHelper(WebDriver driver) {
         super(driver);
     }
@@ -54,6 +56,11 @@ public class AccountCreatePageHelper extends PageBase {
     public AccountCreatePageHelper enterValueToFieldEmailRandom() {
         String email = latinDigitString(10)+"@gmail.com";
         setValueToField(emailField,email);
+        //this.email = email;
         return this;
     }
+
+    /*public String getEmail(){
+        return this.email;
+    }*/
 }

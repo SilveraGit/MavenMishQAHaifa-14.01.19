@@ -36,18 +36,18 @@ public class AccountCreatePageTestsWebinar extends TestBase {
     @Test
     public void  createNewAccount(){
         homePage.pressCreateAccountButton();
-        accountCreatePage.waitUntilPageLoad();
-        accountCreatePage.enterValueToFieldEmailRandom();
-        accountCreatePage.enterValueToFieldPassword("example");
-        accountCreatePage.enterValueToFieldRepPassword("example");
-        accountCreatePage.pressRegistrationButton();
+        accountCreatePage.waitUntilPageLoad()
+                .enterValueToFieldEmailRandom()
+                .enterValueToFieldPassword("example")
+                .enterValueToFieldRepPassword("example")
+                .pressRegistrationButton();
         profilePage.waitUntilPageLoad();
 
         Assert.assertEquals(profilePage.getHeader(),"Registration");
 
         profilePage.menuButtonClick();
-        menuPage.waitUntilPageLoad();
-        menuPage.pressLogOutButton();
+        menuPage.waitUntilPageLoad()
+                .pressLogOutButton();
         homePage.waitUntilPageLoad();
 
         Assert.assertEquals(homePage.getHeader(),"Shabbat in the family circle");

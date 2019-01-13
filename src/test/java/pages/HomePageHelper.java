@@ -36,21 +36,17 @@ public class HomePageHelper extends PageBase {
     }
 
     public String getGoToEventButtonName() {
-        /*WebElement goToEventsButton = driver.findElement(
-                By.className("mat-stroked-button"));*/
         return goToEventButton.getText();
     }
 
-    public void pressGoToEventButton() {
-        /*WebElement goToEventsButton = driver.findElement(
-                By.className("mat-stroked-button"));*/
+    public HomePageHelper pressGoToEventButton() {
         goToEventButton.click();
+        return this;
     }
 
-    public void pressLoginButton() {
-        /*WebElement login = driver.findElement(By
-                .xpath("//span[contains(text(),'Login')]"));*/
+    public HomePageHelper pressLoginButton() {
         loginButton.click();
+        return this;
     }
 
     public HomePageHelper pressCreateAccountButton() {

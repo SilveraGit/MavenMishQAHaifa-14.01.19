@@ -28,12 +28,12 @@ public class LoginPageTests extends TestBase {
     }
     @Test
     public void loginPositive()  {
-        homePage.waitUntilPageLoad();
-        homePage.pressLoginButton();
-        loginPage.waitUntilPageLoad();
-        loginPage.enterValueToFieldEmail("marina@123.com");
-        loginPage.enterValueToFieldPassword("marina");
-        loginPage.pressLogInButton();
+        homePage.waitUntilPageLoad()
+                .pressLoginButton()
+                .waitUntilPageLoad();
+        loginPage.enterValueToFieldEmail("marina@123.com")
+                .enterValueToFieldPassword("marina")
+                .pressLogInButton();
         eventsAuthPage.waitUntilPageLoad();
 
         Assert.assertEquals("Menu", eventsAuthPage.getTooltipIconMenu());
@@ -42,12 +42,12 @@ public class LoginPageTests extends TestBase {
 
     @Test
     public void loginNegative(){
-        homePage.waitUntilPageLoad();
-        homePage.pressLoginButton();
-        loginPage.waitUntilPageLoad();
-        loginPage.enterValueToFieldEmail("marrina@123.com");
-        loginPage.enterValueToFieldPassword("marina");
-        loginPage.pressLogInButton();
+        homePage.waitUntilPageLoad()
+                .pressLoginButton();
+        loginPage.waitUntilPageLoad()
+                .enterValueToFieldEmail("marrina@123.com")
+                .enterValueToFieldPassword("marina")
+                .pressLogInButton();
 
 
        Assert.assertEquals("Wrong authorization, login or password",

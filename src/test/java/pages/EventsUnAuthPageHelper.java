@@ -14,10 +14,11 @@ public class EventsUnAuthPageHelper extends PageBase {
         super(driver);
     }
 
-    public void waitUntilPageLoad() {
+    public EventsUnAuthPageHelper waitUntilPageLoad() {
         waitUntilElementIsLoaded(driver,
                 By.xpath("//span[contains(text(),'Filters')]"),
                 45 );
+        return this;
     }
 
     public String getHeader() {

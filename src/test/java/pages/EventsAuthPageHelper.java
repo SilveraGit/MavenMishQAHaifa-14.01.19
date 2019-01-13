@@ -20,12 +20,13 @@ public class EventsAuthPageHelper extends PageBase {
         super(driver);
     }
 
-    public void waitUntilPageLoad() {
+    public EventsAuthPageHelper waitUntilPageLoad() {
         waitUntilElementIsLoaded(driver,
                 menuButton,
                 20);
         waitUntilElementIsLoaded(driver,
                 filterButton,30);
+        return this;
     }
 
     public String getTooltipIconMenu() {
@@ -41,7 +42,9 @@ public class EventsAuthPageHelper extends PageBase {
         return titlePage.getText();
     }
 
-    public void menuButtonClick() {
+    public EventsAuthPageHelper menuButtonClick() {
+
         menuButton.click();
+        return this;
     }
 }
