@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.*;
+import util.DataProviders;
 
 import java.util.Random;
 
@@ -36,14 +37,14 @@ public class AccountCreatePageTests extends TestBase {
                 .initElements(driver,LoginPageHelper.class);
     }
 
-    @Test
-    public void createNewAccount(){
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "randomUsers")
+    public void createNewAccount(String email,String password){
         homePage.waitUntilPageLoad()
                 .pressCreateAccountButton();
         accountCreatePage.waitUntilPageLoad()
-                .enterValueToFieldEmailRandom() //enterValueToFieldEmail(email1)
-                .enterValueToFieldPassword("example")
-                .enterValueToFieldRepPassword("example")
+                .enterValueToFieldEmail(email) //enterValueToFieldEmail(email1)
+                .enterValueToFieldPassword(password)
+                .enterValueToFieldRepPassword(password)
                 .pressRegistrationButton();
         profilePage.waitUntilPageLoad()
                 .menuButtonClick();
@@ -51,6 +52,8 @@ public class AccountCreatePageTests extends TestBase {
                 .pressLogOutButton();
         homePage.waitUntilPageLoad();
         Assert.assertEquals(homePage.getHeader(), "Shabbat in the family circle");
+        System.out.println("email: " + email + "  password: " + password);
+        driver.quit();
     }
 
     @Test

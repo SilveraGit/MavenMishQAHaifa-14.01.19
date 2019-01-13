@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 import pages.EventsAuthPageHelper;
 import pages.HomePageHelper;
 import pages.LoginPageHelper;
+import pages.MenuPageHelper;
+import util.DataProviders;
 
 /**
  * Created by Inka on 19-Dec-18.
@@ -15,6 +17,7 @@ public class LoginPageTests extends TestBase {
     HomePageHelper homePage;
     LoginPageHelper loginPage;
     EventsAuthPageHelper eventsAuthPage;
+    MenuPageHelper menuPage;
 
     @BeforeMethod
     public void initPage(){
@@ -24,20 +27,30 @@ public class LoginPageTests extends TestBase {
                 .initElements(driver, LoginPageHelper.class);
         eventsAuthPage = PageFactory.initElements(driver,
                 EventsAuthPageHelper.class);
+        menuPage = PageFactory
+                .initElements(driver,MenuPageHelper.class);
 
     }
-    @Test
-    public void loginPositive()  {
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "loginPositive")
+    public void loginPositive(String email, String password)  {
         homePage.waitUntilPageLoad()
                 .pressLoginButton()
                 .waitUntilPageLoad();
-        loginPage.enterValueToFieldEmail("marina@123.com")
-                .enterValueToFieldPassword("marina")
+        loginPage.enterValueToFieldEmail(email)
+                .enterValueToFieldPassword(password)
                 .pressLogInButton();
         eventsAuthPage.waitUntilPageLoad();
 
         Assert.assertEquals("Menu", eventsAuthPage.getTooltipIconMenu());
         Assert.assertEquals("Find event",eventsAuthPage.getHeader());
+        //driver.quit();
+        eventsAuthPage.menuButtonClick();
+        menuPage.waitUntilPageLoad()
+                .pressLogOutButton();
+        homePage.waitUntilPageLoad();
+        Assert.assertEquals(homePage.getHeader(),
+                "Shabbat in the family circle");
+
     }
 
     @Test
