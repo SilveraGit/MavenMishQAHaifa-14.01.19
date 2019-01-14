@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import static pages.PageBase.latinDigitString;
+
 /**
  * Created by Inka on 13-Jan-19.
  */
@@ -30,6 +32,18 @@ public class DataProviders {
     @DataProvider
     public static Iterator<Object[]> createNewAccountsWithDataProvider() throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(DataProviders.class.getResourceAsStream("/NewAccounts.data")));
+        List<Object[]> userData = new ArrayList<>();
+
+        for(String line = in.readLine(); line != null; line = in.readLine()) {
+            userData.add(line.split(";"));
+        }
+
+        in.close();
+        return userData.iterator();
+    }
+    @DataProvider
+    public static Iterator<Object[]> loginNegative() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(DataProviders.class.getResourceAsStream("/NegativeAccounts")));
         List<Object[]> userData = new ArrayList<>();
 
         for(String line = in.readLine(); line != null; line = in.readLine()) {
@@ -65,7 +79,7 @@ public class DataProviders {
     }
 
     private Object generateRandomName() {
-        return "demo" + (new Random()).nextInt()+"@gmail.com";
+        return latinDigitString(10)+"@gmail.com";
     }
 
 }

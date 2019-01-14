@@ -53,17 +53,24 @@ public class LoginPageTests extends TestBase {
 
     }
 
-    @Test
-    public void loginNegative(){
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "loginNegative")
+    public void loginNegative(String email, String pass){
         homePage.waitUntilPageLoad()
                 .pressLoginButton();
         loginPage.waitUntilPageLoad()
-                .enterValueToFieldEmail("marrina@123.com")
-                .enterValueToFieldPassword("marina")
+                .enterValueToFieldEmail(email)
+                .enterValueToFieldPassword(pass)
                 .pressLogInButton();
 
 
-       Assert.assertEquals("Wrong authorization, login or password",
-               loginPage.getAlertText());
+        //Assert.assertEquals("Wrong authorization, login or password", loginPage.getAlertText());
+       if (loginPage.getAlertText() == "Wrong authorization, login or password");
+        {
+            driver.navigate().refresh();
+        }
+
+
+
+
     }
 }

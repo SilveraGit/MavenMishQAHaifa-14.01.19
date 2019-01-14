@@ -55,13 +55,13 @@ public class AccountCreatePageTestsWebinar extends TestBase {
 
     }
 
-    @Test(dataProviderClass = DataProviders.class, dataProvider = "createNewAccountsWithDataProvider")
-    public void  createNewAccountsWithDataProvider(String email, String password, String passwordRep){
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "randomUsers")
+    public void  createNewAccountsWithDataProvider(String email, String password){
         homePage.pressCreateAccountButton();
         accountCreatePage.waitUntilPageLoad()
                 .enterValueToFieldEmail(email)
                 .enterValueToFieldPassword(password)
-                .enterValueToFieldRepPassword(passwordRep)
+                .enterValueToFieldRepPassword(password)
                 .pressRegistrationButton();
         profilePage.waitUntilPageLoad();
 
