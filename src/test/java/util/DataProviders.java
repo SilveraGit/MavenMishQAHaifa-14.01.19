@@ -28,6 +28,19 @@ public class DataProviders {
     }
 
     @DataProvider
+    public static Iterator<Object[]> createNewAccountsWithDataProvider() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(DataProviders.class.getResourceAsStream("/NewAccounts.data")));
+        List<Object[]> userData = new ArrayList<>();
+
+        for(String line = in.readLine(); line != null; line = in.readLine()) {
+            userData.add(line.split(";"));
+        }
+
+        in.close();
+        return userData.iterator();
+    }
+
+    @DataProvider
     public static Iterator<Object[]> anotherPositiveLogin() {
         List<Object[]> data = new ArrayList();
         data.add(new Object[]{"marinaLongLongLong@gmail.com", "marinaLongLongLong"});

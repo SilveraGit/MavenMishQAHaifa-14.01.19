@@ -8,6 +8,7 @@ import pages.AccountCreatePageHelper;
 import pages.HomePageHelper;
 import pages.MenuPageHelper;
 import pages.ProfilePageHelper;
+import util.DataProviders;
 
 /**
  * Created by Inka on 07-Jan-19.
@@ -52,7 +53,26 @@ public class AccountCreatePageTestsWebinar extends TestBase {
 
         Assert.assertEquals(homePage.getHeader(),"Shabbat in the family circle");
 
+    }
 
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "createNewAccountsWithDataProvider")
+    public void  createNewAccountsWithDataProvider(String email, String password, String passwordRep){
+        homePage.pressCreateAccountButton();
+        accountCreatePage.waitUntilPageLoad()
+                .enterValueToFieldEmail(email)
+                .enterValueToFieldPassword(password)
+                .enterValueToFieldRepPassword(passwordRep)
+                .pressRegistrationButton();
+        profilePage.waitUntilPageLoad();
+
+        Assert.assertEquals(profilePage.getHeader(),"Registration");
+
+        profilePage.menuButtonClick();
+        menuPage.waitUntilPageLoad()
+                .pressLogOutButton();
+        homePage.waitUntilPageLoad();
+
+        Assert.assertEquals(homePage.getHeader(),"Shabbat in the family circle");
 
     }
 
